@@ -3,12 +3,23 @@ version: "3.3"
 services:
 
     db:
-        container_name: postgresql_db
+        container_name: postgres_db
         image: postgres
         restart: always
         ports:
-            - 5432:5432
-        environment: :
+            - 5433:5432
+        environment: 
             - POSTGRES_USER=${DB_USER}
             - POSTGRES_PASSWORD=${DB_PASSWORD}
             - POSTGRES_NAME=${DB_NAME}
+
+    pgadmin:
+        container_name: pg_admin
+        image: dpage/pgadmin4
+        environment: 
+            - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+            - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+        ports:
+            - 5051:80
+        depends_on:
+            - db
